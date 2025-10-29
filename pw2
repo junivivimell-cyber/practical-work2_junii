@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom College Registration</title>
+    <!-- Load Tailwind CSS for utility styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Bootstrap CSS for modal styling (required for the requested modal) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom font and base styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: pink;
+        }
+        /* Custom input style to ensure consistency */
+        .custom-input {
+            border: 1px solid #ccc;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Main container for the form -->
+<div class="container mx-auto p-4 md:p-8 max-w-2xl bg-white shadow-xl rounded-xl my-10">
+    
+    <header class="text-center mb-6">
+        <h1 class="text-3xl font-extrabold text-pink-600">BLOOM COLLEGE</h1>
+        <h2 class="text-xl text-gray-600 mt-1">Student Registration Form</h2>
+    </header>
+
+    <form id="registrationForm" class="space-y-6">
+
+        <div class="flex items-center space-x-4 p-4 border-b border-gray-200">
+            <label class="text-sm font-medium text-gray-700 w-32 shrink-0">Student Image:</label>
+            
+            <div class="flex flex-col space-y-1">
+                <input type="file" id="studentImage" accept="image/*" class="hidden"/>
+                
+                <div class="flex items-center space-x-2"> 
+                    
+                    <div id="customUploadBox" class="w-28 h-28 cursor-pointer border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-blue-500 transition duration-150 relative overflow-hidden flex items-center justify-center">
+                        
+                        <!-- Default message (visible when no image is selected) -->
+                        <div id="uploadPlaceholder" class="flex flex-col items-center justify-center space-y-1 p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-5 3h.01M6 16h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            <p class="text-xs text-gray-600 font-semibold">Click to Upload</p>
+                        </div>
+                        <img id="imagePreview" src="" alt="Student Image Preview" class="absolute inset-0 w-full h-full object-cover rounded-md hidden">
+                    </div>
+
+                    <div class="flex flex-col justify-start"> 
+                        <span class="text-xs text-gray-500">(less than 5 MB)</span>
+                        <!-- Error message placeholder for file size limit -->
+                        <span class="text-xs text-red-500 hidden" id="imageError"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personal Details Section -->
+        <div class="space-y-4">
+            <!-- Student Name (Requires onChange/input for Caps Lock) -->
+            <div class="flex items-center">
+                <label for="studentName" class="text-sm font-medium text-gray-700 w-32 shrink-0">Student Name:</label>
+                <input type="text" id="studentName" name="studentName" placeholder="Full Name" class="custom-input focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Father's Name (Requires onChange/input for Caps Lock) -->
+            <div class="flex items-center">
+                <label for="fatherName" class="text-sm font-medium text-gray-700 w-32 shrink-0">Father's Name:</label>
+                <input type="text" id="fatherName" name="fatherName" placeholder="Father's Full Name" class="custom-input focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Mother's Name (Requires onChange/input for Caps Lock) -->
+            <div class="flex items-center">
+                <label for="motherName" class="text-sm font-medium text-gray-700 w-32 shrink-0">Mother's Name:</label>
+                <input type="text" id="motherName" name="motherName" placeholder="Mother's Full Name" class="custom-input focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Gender -->
+            <div class="flex items-center">
+                <label class="text-sm font-medium text-gray-700 w-32 shrink-0">Gender:</label>
+                <div class="flex space-x-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="gender" value="male" class="form-radio text-blue-600 rounded-full">
+                        <span class="ml-2 text-gray-700">Male</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="gender" value="female" class="form-radio text-pink-600 rounded-full">
+                        <span class="ml-2 text-gray-700">Female</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="flex items-center">
+                <label for="dob" class="text-sm font-medium text-gray-700 w-32 shrink-0">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" placeholder="dd / mm / yyyy" class="custom-input focus:ring-blue-500 focus:border-blue-500 w-40">
+            </div>
+
+            <!-- E-mail (Requires onFocus and onBlur) -->
+            <div class="flex flex-col md:flex-row md:items-start md:space-x-4">
+                <label for="email" class="text-sm font-medium text-gray-700 w-32 shrink-0 mt-2 md:mt-0">E-mail:</label>
+                <div class="flex-grow">
+                    <input type="email" id="email" name="email" placeholder="email@xyz.com" class="custom-input focus:ring-blue-500 focus:border-blue-500">
+                    <!-- Help message placeholder for focus/blur feedback -->
+                    <small id="emailHelp" class="block mt-1 text-gray-500 text-xs transition-colors duration-300">
+                        Enter your professional email address.
+                    </small>
+                </div>
+            </div>
+
+            <!-- Level and Department -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Level -->
+                <div class="flex items-center">
+                    <label for="level" class="text-sm font-medium text-gray-700 w-32 shrink-0">Level:</label>
+                    <select id="level" name="level" class="custom-input focus:ring-blue-500 focus:border-blue-500">
+                        <option>PhD</option>
+                        <option>Masters</option>
+                        <option>Bachelor</option>
+                    </select>
+                </div>
+                <!-- Department -->
+                <div class="flex items-center">
+                    <label for="department" class="text-sm font-medium text-gray-700 w-32 shrink-0">Department:</label>
+                    <select id="department" name="department" class="custom-input focus:ring-blue-500 focus:border-blue-500">
+                        <option>Computer Engineering</option>
+                        <option>Business Administration</option>
+                        <option>Applied Sciences</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tel/Mobile -->
+            <div class="flex items-center">
+                <label for="telMobile" class="text-sm font-medium text-gray-700 w-32 shrink-0">Tel/Mobile:</label>
+                <input type="tel" id="telMobile" name="telMobile" placeholder="0 XXXXX XXXXX" class="custom-input focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+        </div>
+
+        <!-- Address Section -->
+        <div class="py-4 border-t border-gray-300">
+            <h4 class="text-xl font-semibold text-gray-800 mb-4 text-center">Address</h4>
+            
+            <div class="space-y-4">
+                <!-- State -->
+                <div class="flex items-center">
+                    <label for="state" class="text-sm font-medium text-gray-700 w-32 shrink-0">State:</label>
+                    <input type="text" id="state" name="state" placeholder="State" class="custom-input focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <!-- City -->
+                <div class="flex items-center">
+                    <label for="city" class="text-sm font-medium text-gray-700 w-32 shrink-0">City:</label>
+                    <input type="text" id="city" name="city" placeholder="City" class="custom-input focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <!-- Postcode -->
+                <div class="flex items-center">
+                    <label for="postcode" class="text-sm font-medium text-gray-700 w-32 shrink-0">Postcode:</label>
+                    <input type="text" id="postcode" name="postcode" placeholder="Postcode" class="custom-input focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex justify-center pt-6 space-x-4">
+            <!-- Register Button (Handles Submission) -->
+            <button type="submit" id="registerBtn" class="px-8 py-2 font-semibold text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 transition duration-300 ease-in-out transform hover:scale-105">
+                Register
+            </button>
+            <!-- Reset Button -->
+            <button type="reset" class="px-8 py-2 font-semibold text-gray-700 bg-gray-200 rounded-lg shadow-md hover:bg-gray-300 transition duration-300 ease-in-out">
+                Reset
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Bootstrap Modal Structure (iv. Upon Submission) -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-t-4 border-green-500 rounded-lg shadow-2xl">
+            <div class="modal-header bg-green-50">
+                <h5 class="modal-title font-bold text-green-700" id="successModalLabel">Success!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center p-6 text-lg font-medium text-gray-800">
+                <svg class="mx-auto h-12 w-12 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p class="mt-4">Your details have been saved!</p>
+            </div>
+            <div class="modal-footer justify-center bg-green-50">
+                <button type="button" class="btn btn-success px-6" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Load Bootstrap JS bundle (required for the modal) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Get all necessary elements
+    const form = document.getElementById('registrationForm');
+    const emailField = document.getElementById('email');
+    const emailHelp = document.getElementById('emailHelp');
+    const studentNameField = document.getElementById('studentName');
+    const fatherNameField = document.getElementById('fatherName');
+    const motherNameField = document.getElementById('motherName');
+    
+    // --- New Elements for Image Preview ---
+    const studentImageField = document.getElementById('studentImage'); // The hidden file input
+    const customUploadBox = document.getElementById('customUploadBox'); // The clickable visual container
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder'); // The default message/icon
+    const imagePreview = document.getElementById('imagePreview'); // The image element
+    const imageError = document.getElementById('imageError');
+
+    // --- Event Handlers ---
+
+    // i. onBlur event for email (Basic validation/feedback)
+    const handleBlur = (event) => {
+        const value = event.target.value.trim();
+        if (event.target.id === 'email') {
+            if (value === '') {
+                emailHelp.textContent = 'Email is required.';
+                emailHelp.className = 'block mt-1 text-red-600 text-xs';
+            } else if (!value.includes('@') || !value.includes('.')) {
+                emailHelp.textContent = 'Please enter a valid email format.';
+                emailHelp.className = 'block mt-1 text-orange-500 text-xs';
+            } else {
+                emailHelp.textContent = 'Email looks good!';
+                emailHelp.className = 'block mt-1 text-green-600 text-xs';
+            }
+        }
+    };
+
+    // ii. onFocus event for email (Hint text)
+    const handleFocus = (event) => {
+        if (event.target.id === 'email') {
+            emailHelp.textContent = 'Example: name@university.edu';
+            emailHelp.className = 'block mt-1 text-blue-500 text-xs';
+        }
+    };
+
+    // iii. onChange/input event for name fields (Caps Lock)
+    const handleNameChange = (event) => {
+        // Use the 'input' event for real-time change to uppercase
+        event.target.value = event.target.value.toUpperCase();
+    };
+
+    // New Function: Handle file change and show preview
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+
+        if (file) {
+            imageError.classList.add('hidden'); // Hide previous error
+            
+            // Check file size (max 5MB)
+            const maxSizeBytes = 5 * 1024 * 1024;
+            if (file.size > maxSizeBytes) {
+                imageError.textContent = 'File size exceeds the 5 MB limit.';
+                imageError.classList.remove('hidden');
+                event.target.value = ''; // Clear the input
+                imagePreview.classList.add('hidden');
+                uploadPlaceholder.classList.remove('hidden'); // Show placeholder again
+                imagePreview.src = '';
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                imagePreview.classList.remove('hidden'); // Show the image
+                uploadPlaceholder.classList.add('hidden'); // Hide the placeholder text
+            };
+            
+            reader.readAsDataURL(file); // Read the image file as a data URL
+        } else {
+            imagePreview.classList.add('hidden'); // Hide if no file is selected
+            uploadPlaceholder.classList.remove('hidden'); // Show placeholder
+            imagePreview.src = '';
+            imageError.classList.add('hidden');
+        }
+    };
+
+    // iv. Upon submission, show the Bootstrap modal
+    const handleSubmission = (event) => {
+        event.preventDefault(); // Stop the default page reload
+
+        // Get the Bootstrap modal element
+        const successModalElement = document.getElementById('successModal');
+        
+        // Initialize the modal using Bootstrap's JavaScript
+        const successModal = new bootstrap.Modal(successModalElement);
+        
+        // Display the modal
+        successModal.show();
+    };
+
+    // --- Listener Assignments ---
+
+    // Handler to click the hidden input when the custom box is clicked
+    customUploadBox.addEventListener('click', () => {
+        studentImageField.click();
+    });
+
+    // i. & ii. Attach Focus and Blur to Email
+    emailField.addEventListener('blur', handleBlur);
+    emailField.addEventListener('focus', handleFocus);
+
+    // iii. Attach Input (onChange) to Name Fields
+    studentNameField.addEventListener('input', handleNameChange);
+    fatherNameField.addEventListener('input', handleNameChange);
+    motherNameField.addEventListener('input', handleNameChange);
+
+    // Attach change event to the HIDDEN input for preview logic
+    studentImageField.addEventListener('change', handleImageChange);
+
+    // iv. Attach Submission handler to the form
+    form.addEventListener('submit', handleSubmission);
+
+</script>
+
+</body>
+</html>
